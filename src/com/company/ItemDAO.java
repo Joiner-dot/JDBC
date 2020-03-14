@@ -49,4 +49,28 @@ public class ItemDAO {
 
     }
 
+    public void insertJDBC (Music music) throws SQLException {
+
+        try {
+            Class.forName ("java.sql.DriverManager");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace ();
+            return;
+        }
+
+        try {
+            con = DriverManager.getConnection (connectioncl.getUrl (), connectioncl.getUsername (), connectioncl.getPass ());
+        } catch (SQLException e) {
+            e.printStackTrace ();
+        }
+
+        try {
+            statement = con.createStatement ();
+            statement.executeUpdate ("INSERT INTO Item VALUES (DEFAULT, '" + music.getTitle () + "', '" + music.getArtist () + "', date '" + music.getDate () + "'," + music.getListPrice () + "," + music.getPrice () + ",1);\n");
+        } catch (SQLException e) {
+            e.printStackTrace ();
+        }
+        statement.close ();
+
+    }
 }
