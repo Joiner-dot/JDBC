@@ -73,4 +73,30 @@ public class ItemDAO {
         statement.close ();
 
     }
+
+    public void deleteDB (String name) throws SQLException {
+
+        try {
+            Class.forName ("java.sql.DriverManager");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace ();
+            return;
+        }
+
+        try {
+            con = DriverManager.getConnection (connectioncl.getUrl (), connectioncl.getUsername (), connectioncl.getPass ());
+        } catch (SQLException e) {
+            e.printStackTrace ();
+        }
+
+        try {
+            statement = con.createStatement ();
+            statement.executeUpdate ("DELETE FROM Item WHERE id > 2 OR Title LIKE '" + name + "'");
+        } catch (SQLException e) {
+            e.printStackTrace ();
+            return;
+        }
+        statement.close ();
+
+    }
 }
